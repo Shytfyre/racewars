@@ -1,19 +1,24 @@
 package game;
-
 import races.Leader;
 import races.RaceType;
 import races.Troop;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Kontrolliert den Spielablauf, erstellt die Squads und steuert die Kampfrunden
+ */
 public class GameController {
+
     private int round;
     private int currentPlayer;
     private final Squad[] squads;
     private final Random random;
     
+    /**
+     * Erstellt einen neuen GameController mit zwei (aktuell) vorgegebenen Squads
+     */
     public GameController() {
         this.round = 1;
         this.currentPlayer = 0;
@@ -38,6 +43,10 @@ public class GameController {
         this.squads = new Squad[]{squad1, squad2};
     }
     
+    /**
+     * Ablauf der Gameloop, steuert die Runden beider Spieler
+     * und attackiert bis ein Team vernichtet ist
+     */
     public void runGame() {
         while (!isGameOver()) {
             GameViewer.printGame(this);
@@ -107,22 +116,39 @@ public class GameController {
         GameViewer.printGameOver(winner);
     }
     
+    /**
+     * Überprüft, ob das Spiel zu Ende ist
+     *
+     * @return true, wenn einer der Squads vernichtet ist, ansonsten false
+     */
     private boolean isGameOver() {
         return squads[0].isDefeated() || squads[1].isDefeated();
     }
     
+    /**
+     * Abfrage der aktuellen Rundenzahl
+     * 
+     * @return Rundenzahl
+     */
     public int getRound() {
         return round;
     }
     
-    public int getCurrentPlayer() {
-        return currentPlayer;
-    }
-    
+    /**
+     * Abfrage des Squads am übergebenen Index
+     * 
+     * @param index Der Index des Squads im "squads" Array
+     * @return Der Squad am übergebenen Index
+     */
     public Squad getSquad(int index) {
         return squads[index];
     }
     
+    /**
+     * Main Methode des Programms, hier wird das Spiel gestartet
+     * 
+     * @param args Kommandozeileneingaben
+     */
     public static void main(String[] args) {
         GameController game = new GameController();
         game.runGame();

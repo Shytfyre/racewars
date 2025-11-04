@@ -3,7 +3,11 @@ package races.undead;
 import races.Element;
 import races.Leader;
 
+/**
+ * Der Lich, Anführer der Untoten.
+ */
 class Lich extends Leader {
+
     private static final double BASE_HEALTH = 120.0;
     private static final double ARMOR = 30.0;
     private static final double BASE_DAMAGE = 16.0;
@@ -12,6 +16,9 @@ class Lich extends Leader {
     private static final Element ELEMENT = Element.WATER;
     private static final double BONUS = 2.3;
     
+    /**
+     * Erstellt einen Lich mit den angegebenen Werten.
+     */
     Lich() {
         super(BASE_HEALTH, ARMOR, BASE_DAMAGE, SPEED, COST, ELEMENT, BONUS);
     }

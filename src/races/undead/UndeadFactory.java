@@ -7,11 +7,24 @@ import races.Troop;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Factory zur Erstellung der Untotentruppen.
+ */
 public class UndeadFactory implements Factory {
+
     private static boolean leaderCreated = false;
     private static final double LEADER_COST = 140.0;
     private static final double BASE_COST = 70.0;
-    
+
+    /**
+     * Erstellt die Untotentruppen basierend auf dem Betrag des Investments.
+     * Erstellt zuerst den Lich, falls noch keiner existiert und genug Geld verfügbar ist.
+     *
+     *
+     * @param race Der Rassentyp (muss Untote sein, sonst wird ein leeres Array ausgegeben).
+     * @param cashAmount die verfügbare Menge an Geld.
+     * @return Ein Array der erstellten Truppen, oder leeres Array bei ungenügendem Geld oder falscher Rasse.
+     */
     @Override
     public Troop[] createTroops(RaceType race, double cashAmount) {
         if (race != RaceType.UNDEAD || cashAmount < LEADER_COST) {

@@ -6,8 +6,16 @@ import races.Troop;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Kontrolliert die Anzeige der aktuellen Runde, Kämpfe und des Ergebnisses.
+ */
 public class GameViewer {
 
+    /**
+     * Zeigt die aktuelle Runde und die Squads beider Spieler an
+     * 
+     * @param game der GameController
+     */
     public static void printGame(GameController game) {
         int round = game.getRound();
         Squad squad1 = game.getSquad(0);
@@ -22,6 +30,12 @@ public class GameViewer {
         System.out.println("⚔️⚔️⚔️⚔️⚔️⚔️⚔️⚔️Combat⚔️⚔️⚔️⚔️⚔️⚔️⚔️⚔️");
     }
 
+    /**
+     * Zeigt die Namen und Truppenliste des Squads an
+     * (Leader zuerst, dann die Truppen der jeweiligen Rassen)
+     * 
+     * @param squad Der Squad
+     */
     private static void printSquad(Squad squad) {
         System.out.println("Squad: " + squad.getName());
         System.out.println("Squadsize: " + squad.getSquadSize());
@@ -49,6 +63,16 @@ public class GameViewer {
         System.out.println();
     }
 
+    /**
+     * Zeigt die genauen Werte der angreifenden und verteidigenden Truppe an
+     * (anhand des Beispiels im Assignment)
+     * 
+     * @param attacker Die attackierende Truppe
+     * @param attackerHealth Leben der attackierenden Truppe
+     * @param defender Die verteidigende Truppe
+     * @param defenderHealth Leben der verteidigenden Truppe
+     * @param damage Schaden des Angriffs
+     */
     public static void printAttack(Troop attacker, double attackerHealth, Troop defender, double defenderHealth, double damage) {
         String attackerStr;
         if (attacker instanceof Leader) {
@@ -68,6 +92,13 @@ public class GameViewer {
                 attackerStr, attackerHealth, defenderStr, defenderHealth, damage);
     }
 
+    /**
+     * Zeigt das Ergebnis des Angriffs
+     * verbliebene Leben/tot
+     * 
+     * @param attacker Die angreifende Truppe
+     * @param defender Die verteidigende Truppe
+     */
     public static void printAttackResult(Troop attacker, Troop defender) {
         String attackerStr;
         if (attacker instanceof Leader) {
@@ -92,6 +123,11 @@ public class GameViewer {
         }
     }
 
+    /**
+     * Zeigt die "Game Over" Nachricht mit dem Namen des Gewinners
+     * 
+     * @param winnerName Name des Gewinners
+     */
     public static void printGameOver(String winnerName) {
         System.out.println("---------------Game over--------------------");
         System.out.println("Winner: " + winnerName);
