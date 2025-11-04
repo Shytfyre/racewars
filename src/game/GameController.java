@@ -19,20 +19,19 @@ public class GameController {
         this.currentPlayer = 0;
         this.random = new Random();
         
-        // Hardcoded squad creation for Player 1
-        // Example: 9 Humans (1 Archmage + 8 Humans = 220 + 8*110 = 1100), 4 Orcs (1 Farseer + 3 Orcs = 300 + 3*150 = 750)
-        // Total: 1850
+        // Beispiel für Spieler 1; 9 x Mensch, 5 x Orc; Kosten: 2000
+
         Investment[] player1Investments = {
             new Investment(RaceType.HUMAN, 1100.0),
-            new Investment(RaceType.ORC, 750.0)
+            new Investment(RaceType.ORC, 900.0)
         };
         Squad squad1 = new Squad("Player1", player1Investments);
         
-        // Hardcoded squad creation for Player 2 (from remaining races)
-        // Example: Undead and Nightelf
+        // Beispiel für Spieler 2; 11 x Untote, 7 x Nachtelfen; Kosten: 2000
+
         Investment[] player2Investments = {
-            new Investment(RaceType.UNDEAD, 700.0),  // 1 Lich + 8 Undead = 140 + 8*70 = 700
-            new Investment(RaceType.NIGHTELF, 725.0) // 1 Daemonslayer + 3 Nightelf = 290 + 3*145 = 725
+            new Investment(RaceType.UNDEAD, 840.0),
+            new Investment(RaceType.NIGHTELF, 1160.0)
         };
         Squad squad2 = new Squad("Player2", player2Investments);
         
@@ -53,7 +52,7 @@ public class GameController {
                 break;
             }
             
-            // Sort attackers so leaders attack first
+            // Sortierte Angreiferliste (Leader zuerst, dann base troops)
             List<Troop> sortedAttackers = new ArrayList<>();
             List<Troop> baseTroops = new ArrayList<>();
             for (Troop attacker : aliveAttackers) {
@@ -64,38 +63,32 @@ public class GameController {
                 }
             }
             sortedAttackers.addAll(baseTroops);
-            
-            // Each troop attacks in order
+
             for (Troop attacker : sortedAttackers) {
                 if (aliveDefenders.isEmpty()) {
                     break;
                 }
                 
-                // Select random target
+                // Zufällige Wahl des Ziels aus der Liste der lebendigen Gegner
                 Troop defender = aliveDefenders.get(random.nextInt(aliveDefenders.size()));
-                
-                // Capture health before attack
+
                 double attackerHealthBefore = attacker.getHealth();
                 double defenderHealthBefore = defender.getHealth();
-                
-                // Perform attack
+
                 double damage = attacker.attack(defender);
-                
-                // Display attack (with health before attack)
+
                 GameViewer.printAttack(attacker, attackerHealthBefore, defender, defenderHealthBefore, damage);
-                
-                // Remove dead troops and update defender list
+
                 defendingSquad.removeDeadTroops();
                 aliveDefenders = defendingSquad.getAliveTroops();
-                
-                // Display result (with health after attack)
+
                 GameViewer.printAttackResult(attacker, defender);
             }
             
-            // Switch player
+            // Wechsel von Spieler 1 zu Spieler 2
             currentPlayer = 1 - currentPlayer;
             
-            // Increment round after both players have had a turn
+            // Erhöht den Counter wieder, wenn Spieler 2 fertig ist damit Spieler 1 weiter machen kann
             if (currentPlayer == 0) {
                 round++;
             }
@@ -103,7 +96,7 @@ public class GameController {
             System.out.println();
         }
         
-        // Determine winner
+        // Erkennung + Ausgabe des Siegers
         String winner;
         if (squads[0].isDefeated()) {
             winner = squads[1].getName();
